@@ -17,6 +17,7 @@ library(purrr)
 
 
 
+
 # Set up baseurl & login ------------------------------------------------------------------
 
 baseurl <- "https://data.psi-mis.org/"
@@ -36,9 +37,11 @@ login_dhis2(baseurl,
 
 # check internet
 check_internet <- function(){
-  stop_if_not(.x = has_internet(),
-              msg = "Please check your internet connection")
-  
+  if (!curl::has_internet()){
+    stop(
+      "Please check your internet connection"
+    )
+  }
 }
 
 # check status of a response
@@ -141,11 +144,22 @@ kits_distribution_d <- purrr::map(kits_distribution_tr,function(x){
 
 # Did any of the API request fail? ------------------------------------------
 
-purrr::map_lgl(kits_distribution_d, function(x){
+any_fails <- 
+  purrr::map_lgl(kits_distribution_d, function(x){
   httr::http_error(x)
 }) %>% 
   all(.)
 
+
+if (any_fails){
+  stop(
+    sprintf(
+      "PSI - MIS API Upload request failed \n<%s>",
+      "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"
+    ),
+    call. = FALSE
+  )
+}
 
 
 
