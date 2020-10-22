@@ -10,7 +10,6 @@
 library(httr)
 library(curl)
 library(jsonlite)
-library(keyringr)
 library(magrittr)
 library(dplyr)
 library(purrr)
@@ -21,19 +20,38 @@ library(purrr)
 # Set up baseurl & login ------------------------------------------------------------------
 
 baseurl <- "https://data.psi-mis.org/"
-base <- substr(baseurl, 9, 24)
 
+username <- ""
+password <- ""
+
+# set key endpoints 
+endpoints <- list(hotspots = "api/32/analytics/dataValueSet.json?dimension=dx%3AdQTWxMDtAiW%3BmOGarPwHuFc&dimension=n5ODfcdD1YQ%3AYF8v2OSxWKl&dimension=ou%3ArP1W74RpNWF&dimension=pe%3A202004%3B202005%3B202006%3B202007%3B202008%3B202009%3B202010%3B202011%3B202012%3B202101%3B202102%3B202103&completedOnly=false",
+                  pharmacies = "api/32/analytics/dataValueSet.json?dimension=dx%3AdQTWxMDtAiW%3BmOGarPwHuFc&dimension=n5ODfcdD1YQ%3AoHwb9OjSdkr&dimension=ou%3ArP1W74RpNWF&dimension=pe%3A202004%3B202005%3B202006%3B202007%3B202008%3B202009%3B202010%3B202011%3B202012%3B202101%3B202102%3B202103&completedOnly=false",
+                  workplace = "api/32/analytics/dataValueSet.json?dimension=dx%3AdQTWxMDtAiW%3BmOGarPwHuFc&dimension=n5ODfcdD1YQ%3AdXBNFfxQ6O8&dimension=ou%3ArP1W74RpNWF&dimension=pe%3A202004%3B202005%3B202006%3B202007%3B202008%3B202009%3B202010%3B202011%3B202012%3B202101%3B202102%3B202103&completedOnly=false")
+
+
+
+# utils -------------------------------------------------------------------
+
+set_agent <- function(agent = NULL){
+  if (is.null(agent)){
+    agent <- "https://github.com/psi-mis/HIVST"
+    httr::user_agent(agent)
+  }
+  
+  if (!is.null(agent)){
+    httr::user_agent(agent)
+  }
+  
+}
 
 #' @importFrom httr GET authenticate
 #' log in 
 login_dhis2 <- function(baseurl, usr, pwd){
-  GET(paste0(baseurl, "api/me"), authenticate(usr, pwd)) -> r
+  GET(paste0(baseurl, "api/me"), set_agent(), authenticate(usr, pwd)) -> r
   assertthat::assert_that(r$status_code == 200L)
 }
 
-login_dhis2(baseurl,
-            usr = keyringr::get_kc_account(base, type = "internet"),
-            pwd = keyringr::decrypt_kc_pw(base, type = "internet"))
 
 # check internet
 check_internet <- function(){
@@ -62,24 +80,17 @@ check_status <- function(resp){
 
 # Pull kits distribution data from the main source ------------------------------------------------------------
 
-endpoints <- list(hotspots = "api/32/analytics/dataValueSet.json?dimension=dx%3AdQTWxMDtAiW%3BmOGarPwHuFc&dimension=n5ODfcdD1YQ%3AYF8v2OSxWKl&dimension=ou%3ArP1W74RpNWF&dimension=pe%3A202004%3B202005%3B202006%3B202007%3B202008%3B202009%3B202010%3B202011%3B202012%3B202101%3B202102%3B202103&completedOnly=false",
-                  pharmacies = "api/32/analytics/dataValueSet.json?dimension=dx%3AdQTWxMDtAiW%3BmOGarPwHuFc&dimension=n5ODfcdD1YQ%3AoHwb9OjSdkr&dimension=ou%3ArP1W74RpNWF&dimension=pe%3A202004%3B202005%3B202006%3B202007%3B202008%3B202009%3B202010%3B202011%3B202012%3B202101%3B202102%3B202103&completedOnly=false",
-                  workplace = "api/32/analytics/dataValueSet.json?dimension=dx%3AdQTWxMDtAiW%3BmOGarPwHuFc&dimension=n5ODfcdD1YQ%3AdXBNFfxQ6O8&dimension=ou%3ArP1W74RpNWF&dimension=pe%3A202004%3B202005%3B202006%3B202007%3B202008%3B202009%3B202010%3B202011%3B202012%3B202101%3B202102%3B202103&completedOnly=false")
-
-
-
-
 check_internet()
+
+login_dhis2(baseurl, usr = username, pwd = password)
 
 
 kits_distribution <- purrr::map(endpoints, 
                                 function(x){
-                                  httr::GET(paste0(baseurl, x)) %>%
+                                  httr::GET(paste0(baseurl, x), set_agent()) %>%
                                     httr::content(., "text") %>%
                                     jsonlite::fromJSON(.)
                                 })
-
-
 
 
 # Transform  --------------------------------------------------------------
@@ -135,7 +146,8 @@ kits_distribution_tr <- list(hotspots = kits_distr_hotspots_tr,
 # Re-upload transformed kits ------------------------------------------------------------------
 
 kits_distribution_d <- purrr::map(kits_distribution_tr,function(x){
-                                    httr::POST(paste0(baseurl, "api/dataValueSets?importStrategy=CREATE_AND_UPDATE"), 
+                                    httr::POST(paste0(baseurl, "api/dataValueSets?importStrategy=CREATE_AND_UPDATE"),
+                                               set_agent(), 
                                                body = jsonlite::toJSON(list(dataValues = x), auto_unbox = T), 
                                                httr::content_type_json())
                                   })
