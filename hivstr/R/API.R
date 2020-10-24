@@ -86,15 +86,165 @@ api_endpoint <- function(baseurl = "https://clone.psi-mis.org/", dimension_dx = 
 
 }
 
+#' Check an API response
+#'
+#' Did an API request return error?
+#'
+#' @param resp An API response to check.
+#'
+#' @return An error message
+#'
+#' @importFrom httr http_error http_status
+api_status_check <- function(resp = NULL){
+
+  if (is.null(resp)){
+    stop(
+      "API response must be specified",
+      call. = FALSE
+    )
+  }
+
+  if (http_error(resp)){
+    stop(
+      sprintf(
+        "PSI - MIS API request failed [%s]\n<%s>",
+        http_status(resp),
+        "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"
+      ),
+      call. = FALSE
+    )
+  }
+
+}
+
+#' Check an API response is JSON
+#'
+#' Check that an API request returned a JSON object.
+#'
+#' @param resp A response
+#' @return An error message
+#' @importFrom httr http_type
+api_json_check <- function(resp = NULL){
+
+  if (!is.null(resp)){
+
+    if (http_type(resp) != "application/json"){
+      stop(
+        "API did not return JSON",
+        call. = FALSE
+      )
+    }
+
+  }
+
+}
 
 
 
 
 
+#' Pull a Resource at PSI-MIS
+#'
+#' @param endpoint A string, the API endpoint
+#'
+#' @return An S3 object.
+#'
+#' @importFrom httr GET timeout
+#' @importFrom utils URLencode str
+api_get <- function(endpoint = NULL){
+
+  if (is.null(endpoint)){
+    stop(
+      "Endpoint must be specified!",
+      call. = FALSE
+    )
+  }
+
+  url <- URLencode(endpoint, reserved = T)
+
+  resp <- GET(url, set_agent(), timeout(60))
+
+  api_json_check()
+
+  api_status_check()
+
+  structure(
+    list(
+      endpoint = endpoint,
+      response = resp
+    ),
+    class = "api_get"
+  )
+
+}
+
+print.api_get <- function(x, ...){
+  cat("[PSI - MIS ", x$endpoint, "]\n", sep = "")
+  str(x)
+  invisible(x)
+}
 
 
+#' Update Data Values at PSI MIS
+#'
+#' Create or update dataValueSet resource at PSI MIS.
+#'
+#' @importFrom httr modify_url POST timeout content_type_json
+#' @importFrom jsonlite toJSON
+#' @importFrom utils URLencode str
+#'
+#' @param endpoint A string, API endpoint.
+#' @param data_values A data.frame, filtered kits.
+#' @param import_strategy A string. Default is CREATE_UPDATE.
+#'
+#' @return An S3 object, reponse
+#'
+api_update_data <- function(endpoint = NULL, data_values = NULL, import_strategy = "CREATE_AND_UPDATE"){
+
+  if (is.null(endpoint)){
+    stop(
+      "Endpoint must be specified!",
+      call. = FALSE
+    )
+  }
+
+  if (is.null(data_values)){
+    stop(
+      "Data values must be specified!",
+      call. = FALSE
+    )
+  }
+
+  url <- modify_url(endpoint, query = list(importStrategy = import_strategy))
+
+  url <- URLencode(url)
+
+  resp <- POST(url, set_agent(), timeout(60),
+               body = toJSON(list(dataValues = data_values), auto_unbox = T),
+               content_type_json()
+               )
+
+  api_json_check()
+
+  api_status_check()
+
+  structure(
+    list(
+      endpoint = endpoint,
+      data_values = data_values,
+      response = resp
+    ),
+    class = "api_update_data"
+  )
 
 
+}
+
+print.api_update_data <- function(x, ...){
+  cat("[PSI - MIS ", x$endpoint, "]\n", sep = "")
+  str(x)
+  invisible(x)
+}
 
 
 
