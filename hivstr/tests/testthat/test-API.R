@@ -10,3 +10,6 @@ test_that("API resource must be specified, points to analytics by default, and t
 })
 
 
+test_that("API endpoint defautls to hotspots", {
+  expect_equal(api_endpoint(), paste0("https://clone.psi-mis.org/", api_resource("dataValueSet"),"?dimension=dx:dQTWxMDtAiW;mOGarPwHuFc&dimension=n5ODfcdD1YQ:YF8v2OSxWKl&dimension=ou:rP1W74RpNWF&dimension=pe:THIS_MONTH&completedOnly=FALSE"))
+})
