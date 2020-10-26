@@ -14,7 +14,8 @@ a single chart/table.
 
 ## Installation
 
-You can install the released version of hivstr from
+hivstr is on its way to [CRAN](https://CRAN.R-project.org). You can
+install the released version of hivstr from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -25,7 +26,7 @@ And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("psi-mis/HIVST")
+devtools::install_github("psi-mis/hivstr")
 ```
 
 ## Usage
