@@ -22,7 +22,7 @@ The goal of hivstr is to bypass using the Kenya HIV self-testing distribution ch
 
 ## Installation
 
-You can install the released version of hivstr from [CRAN](https://CRAN.R-project.org) with:
+hivstr is on its way to [CRAN](https://CRAN.R-project.org). You can install the released version of hivstr from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("hivstr")
