@@ -11,7 +11,7 @@ api_endpoint(
   category_option = "YF8v2OSxWKl",
   dimension_ou = "rP1W74RpNWF",
   dimension_pe = "THIS_MONTH",
-  completed_only = FALSE
+  completed_only = "false"
 )
 }
 \arguments{
