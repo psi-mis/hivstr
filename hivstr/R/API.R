@@ -64,9 +64,9 @@ api_resource <- function(resource = NULL, push = FALSE){
 #' @return A string, An API endpoint.
 api_endpoint <- function(baseurl = "https://clone.psi-mis.org/", dimension_dx = c("dQTWxMDtAiW","mOGarPwHuFc"), category = "n5ODfcdD1YQ",
                           category_option = "YF8v2OSxWKl", dimension_ou = "rP1W74RpNWF", dimension_pe = "THIS_MONTH",
-                          completed_only = FALSE){
+                          completed_only = "false"){
 
-  resource <- api_resource("dataValueSet")
+  resource <- api_resource("dataValueSet.json")
 
   query <- paste0("?",
     paste(
@@ -94,7 +94,7 @@ api_endpoint <- function(baseurl = "https://clone.psi-mis.org/", dimension_dx = 
 #'
 #' @return An error message
 #'
-#' @importFrom httr http_error http_status
+#' @importFrom httr http_error status_code
 api_status_check <- function(resp = NULL){
 
   if (is.null(resp)){
@@ -108,7 +108,7 @@ api_status_check <- function(resp = NULL){
     stop(
       sprintf(
         "PSI - MIS API request failed [%s]\n<%s>",
-        http_status(resp),
+        status_code(resp),
         "https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual.html"
       ),
       call. = FALSE
@@ -151,6 +151,7 @@ api_json_check <- function(resp = NULL){
 #'
 #' @importFrom httr GET timeout
 #' @importFrom utils URLencode str
+#' @export
 api_get <- function(endpoint = NULL){
 
   if (is.null(endpoint)){
@@ -160,13 +161,13 @@ api_get <- function(endpoint = NULL){
     )
   }
 
-  url <- URLencode(endpoint, reserved = T)
+  url <- URLencode(endpoint)
 
   resp <- GET(url, set_agent(), timeout(60))
 
-  api_json_check()
+  api_json_check(resp)
 
-  api_status_check()
+  api_status_check(resp)
 
   structure(
     list(
@@ -198,7 +199,6 @@ print.api_get <- function(x, ...){
 #' @param import_strategy A string. Default is CREATE_UPDATE.
 #'
 #' @return An S3 object, reponse
-#'
 api_update_data <- function(endpoint = NULL, data_values = NULL, import_strategy = "CREATE_AND_UPDATE"){
 
   if (is.null(endpoint)){
@@ -224,9 +224,9 @@ api_update_data <- function(endpoint = NULL, data_values = NULL, import_strategy
                content_type_json()
                )
 
-  api_json_check()
+  api_json_check(resp)
 
-  api_status_check()
+  api_status_check(resp)
 
   structure(
     list(
@@ -247,18 +247,30 @@ print.api_update_data <- function(x, ...){
 }
 
 
+#' Basic Auth
+#'
+#' @importFrom httr GET authenticate status_code
+#' @param baseurl A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.
+#' @param username A string. PSI - MIS username.
+#' @param password A string. PSI - MIS user password.
+#'
+#' @return logical
+#' @export
+api_basic_auth <- function(baseurl = "https://clone.psi-mis.org/", username, password){
 
-kits_endpoint <- function(baseurl){
+  endpoint <- api_resource("me", push = T)
 
-  structure(
-    list(
-      hotspots = api_endpoint(baseurl),
-      workplace = api_endpoint(baseurl, category_option = "dXBNFfxQ6O8"),
-      pharmacies = api_endpoint(baseurl, category_option = "oHwb9OjSdkr")
-    ),
-    class = "kit_endpoints"
-  )
+  url <- URLencode(paste0(baseurl, endpoint))
 
+  resp <- GET(url,set_agent(), authenticate(username, password))
+
+  api_json_check(resp)
+
+
+  if (status_code(resp) == 200L)
+    TRUE
+  else
+    FALSE
 
 }
 
