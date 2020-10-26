@@ -1,35 +1,61 @@
-# ke_hivst.R
 
-## overview 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-Category combinations a.k.a cat combos are one of the techniques used to disaggregate data in DHIS2. They allow multiple categories to be combined into a related set, making it easier to collect and analyze data based on the categories. 
+# hivstr
 
-However, when used at the programs or data sets directly, cat combos are applied at the top level of the analytic views. This makes it technically challenging to relate data with other sources, particularly those with and without related dimensions. 
+<!-- badges: start -->
 
-This R script is meant to bypass the use of the Kenya HIV self-testing distribution channels, a category combination, directly from the analytic views, making it easier to relate the HIV self-testing data on a single chart/table.
+<!-- badges: end -->
 
-## Usage 
+The goal of hivstr is to bypass using the Kenya HIV self-testing
+distribution channels, a category combination, directly from the
+analytic views, making it easier to relate the HIV self-testing data on
+a single chart/table.
 
-To run the script, you will need to have `R` and the following packages installed. 
+## Installation
 
--	**[httr](https://cran.r-project.org/web/packages/httr/index.html)** – for working with URLs and HTTP. 
--	**[jsonlite](https://cran.r-project.org/web/packages/jsonlite/index.html)** – A json parser.
-- **[magritrr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)** – for forward piping.
--	**[dplyr](https://cran.r-project.org/web/packages/dplyr/index.html)** – for data manipulation.
--	**[purrr](https://purrr.tidyverse.org/)** –  An enhanced functional programming tool. 
+You can install the released version of hivstr from
+[CRAN](https://CRAN.R-project.org) with:
 
-I am the using **[keyringr](https://cran.r-project.org/web/packages/keyringr/index.html)** currently to store and manage the my credentials. You will neeed to have this installed and set up your credentials appropriately. 
+``` r
+install.packages("hivstr")
+```
 
-Then download and source the script from your directory like this.
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("psi-mis/HIVST")
+```
+
+## Usage
+
+Load the package with:
+
+``` r
+library(hivstr)
+```
+
+Then set and pass credentials to a PSI MIS.
+
+``` r
+# server url, default is clone
+baseurl <- "https://clone.psi-mis.org/"
+
+# enter username & password
+usr <- "ke_hiv"
+pwd <- "Temp@123"
+
+# login to a PSI MIS
+api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
+#> [1] TRUE
+```
+
+Run this function to bypass HIVST KE distribution channels:
 
 ``` r
 
-Source( ~/YOUR DIRECTORY/HIVST/ke_hivst.R)
-
+bypass_ke_distr(baseurl)
 ```
 
-
-
-
-
-
+Expect a TRUE for a successive update, otherwise there will be errors.
