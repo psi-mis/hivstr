@@ -2,7 +2,7 @@
 #' @noRd
 set_agent <- function(agent = NULL){
   if (is.null(agent)){
-    agent <- "https://github.com/psi-mis/HIVST"
+    agent <- "https://github.com/psi-mis/hivstr"
     httr::user_agent(agent)
   }
 
