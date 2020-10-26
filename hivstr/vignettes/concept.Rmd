@@ -1,0 +1,58 @@
+---
+title: "The Concept"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Why bypass Cat Combos?}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overiview
+
+Category combinations a.k.a cat combos are one of the techniques used to disaggregate data in DHIS2. They allow multiple categories to be combined into a related set, making it easier to collect and analyze data based on the categories.
+
+However, when used at the programs or data sets directly, cat combos are applied at the top level of the analytic views. This makes it technically challenging to relate data with other sources, particularly those with and without related dimensions.
+
+This R script is meant to bypass the use of the Kenya HIV self-testing distribution channels, a category combination, directly from the analytic views, making it easier to relate the HIV self-testing data on a single chart/table.
+
+## Usage
+
+Load the package with:
+
+```{r}
+library(hivstr)
+
+```
+
+Then set and pass credentials to a PSI MIS. 
+
+```{r}
+# server url, default is clone
+baseurl <- "https://clone.psi-mis.org/"
+
+# enter username & password
+usr <- "ke_hiv"
+pwd <- "Temp@123"
+
+# login to a PSI MIS
+api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
+
+```
+
+Run this function to bypass HIVST KE distribution channels:
+
+```{r, eval=FALSE}
+
+bypass_ke_distr(baseurl)
+
+```
+
+Expect a TRUE for a successive update, otherwise there will be errors.
+
