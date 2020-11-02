@@ -1,6 +1,6 @@
 Package: hivstr
 Title: Bypass HIV Self Testing Distribution Channels
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person(given = "Isaiah",
            family = "Nyabuto",
@@ -18,7 +18,8 @@ Imports:
     jsonlite,
     dplyr,
     purrr,
-    curl
+    curl,
+    rlang
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
 Suggests: 
@@ -26,3 +27,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/psi-mis/hivstr
+BugReports: https://github.com/psi-mis/hivstr/issues
