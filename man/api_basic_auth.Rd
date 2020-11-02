@@ -17,5 +17,5 @@ api_basic_auth(baseurl = "https://clone.psi-mis.org/", username, password)
 logical
 }
 \description{
-Basic Auth
+Authenticate to a PSI - MIS.
 }

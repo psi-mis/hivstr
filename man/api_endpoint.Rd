@@ -15,7 +15,8 @@ api_endpoint(
 )
 }
 \arguments{
-\item{baseurl}{A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.}
+\item{baseurl}{A string, the base URL of a PSI - MIS. Default is PSI - MIS
+clone server.}
 
 \item{dimension_dx}{A string or character vector, data elements or indicators
 uid. The defaults are Oraq (id: mOGarPwHuFc) and Insti (id: dQTWxMDtAiW)
@@ -43,7 +44,7 @@ A string, An API endpoint.
 Create an API endpoint to query kits from the analytics.
 }
 \details{
-\code{api_endpoint} constructs an API endpoint to query HIV
-self testing kits from the analytics resource. The default endpoint will
-query insti and oraq kits distributed via hotpots.
+\code{api_endpoint} constructs an API endpoint to query HIV self testing kits
+from the analytics resource. The default endpoint will query insti and oraq
+kits distributed via hotpots.
 }

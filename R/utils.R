@@ -1,3 +1,8 @@
+#' Set user agent
+#'
+#' Set a user agent.
+#'
+#' @param agent A string.
 #' @importFrom httr user_agent
 #' @noRd
 set_agent <- function(agent = NULL){
@@ -12,7 +17,11 @@ set_agent <- function(agent = NULL){
 
 }
 
-#' @importFrom curl has_internet
+#' Check for internet access
+#'
+#' Check if internet access exists.
+#'
+#'  @importFrom curl has_internet
 #' @noRd
 check_internet <- function(){
   if (!curl::has_internet()){
@@ -25,11 +34,26 @@ check_internet <- function(){
 
 
 
-
+#' Colon
+#'
+#' Collapse everything in vector of characters by a full colon.
+#'
+#' @param ... A character vector.
+#'
+#' @return A string separated by full colon.
+#'
+#' @noRd
 colon <- function(...){
   paste0(..., collapse = ":")
 }
 
+#' Semi colon
+#'
+#' Collapse everything in vector of characters by a semi colon.
+#' @inheritParams colon
+#'
+#' @return A string separated by full colon.
+#' @noRd
 semi_colon <- function(...){
   paste0(..., collapse = ";")
 }

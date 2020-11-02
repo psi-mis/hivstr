@@ -12,7 +12,7 @@ api_resource(resource = NULL, push = FALSE)
 \item{push}{Logical. Default is FALSE, which returns the analytics resource.}
 }
 \value{
-A string, an API resource
+A string, an API resource.
 }
 \description{
 Point an API resource.

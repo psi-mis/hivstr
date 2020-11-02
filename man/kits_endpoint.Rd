@@ -9,6 +9,9 @@ kits_endpoint(baseurl)
 \arguments{
 \item{baseurl}{A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.}
 }
+\value{
+An S3 object.
+}
 \description{
 Kits endpoints
 }

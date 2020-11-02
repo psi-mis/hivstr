@@ -2,6 +2,7 @@
 #'
 #' Bypass KE Distribution channels, a category combination filter.
 #' @param baseurl A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.
+#' @importFrom rlang .data
 #' @export
 bypass_ke_distr <- function(baseurl){
 
@@ -40,17 +41,17 @@ bypass_ke_distr <- function(baseurl){
   main <- kits_data_elements("main")
 
   kits_distr_kits_hotspots <- dplyr::mutate(kits_distr_kits$hotspots$response$dataValues,
-                                            dataElement = ifelse(dataElement == main$insti,
+                                            dataElement = ifelse(.data$dataElement == main$insti,
                                                                  hotspots$insti,
                                                                  hotspots$oraq))
 
   kits_distr_kits_pharmacies <- dplyr::mutate(kits_distr_kits$pharmacies$response$dataValues,
-                                              dataElement = ifelse(dataElement == main$insti,
+                                              dataElement = ifelse(.data$dataElement == main$insti,
                                                                    pharmacies$insti,
                                                                    pharmacies$oraq))
 
   kits_distr_kits_workplace <- dplyr::mutate(kits_distr_kits$workplace$response$dataValues,
-                                             dataElement = ifelse(dataElement == main$insti,
+                                             dataElement = ifelse(.data$dataElement == main$insti,
                                                                   workplace$insti,
                                                                   workplace$oraq))
   transformed_kits <- list(
@@ -96,6 +97,7 @@ bypass_ke_distr <- function(baseurl){
 #' Kits endpoints
 #'
 #' @param baseurl A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.
+#' @return An S3 object.
 #' @export
 kits_endpoint <- function(baseurl){
 
@@ -116,7 +118,7 @@ kits_endpoint <- function(baseurl){
 #' Mapping of new kits data elements.
 #'
 #' @param type A string.
-#' @return A list
+#' @return A list.
 #' @export
 kits_data_elements <- function(type){
   switch (type,

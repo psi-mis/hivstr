@@ -10,7 +10,7 @@ kits_data_elements(type)
 \item{type}{A string.}
 }
 \value{
-A list
+A list.
 }
 \description{
 Mapping of new kits data elements.

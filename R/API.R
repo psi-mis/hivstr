@@ -21,7 +21,7 @@ api_version <- function(version = NULL){
 #' @param resource A string, A PSI - MIS resource.
 #' @param push Logical. Default is FALSE, which returns the analytics resource.
 #'
-#' @return A string, an API resource
+#' @return A string, an API resource.
 api_resource <- function(resource = NULL, push = FALSE){
   if (!is.null(resource) && push == FALSE){
     paste0(
@@ -42,11 +42,12 @@ api_resource <- function(resource = NULL, push = FALSE){
 #'
 #' Create an API endpoint to query kits from the analytics.
 #'
-#' \code{api_endpoint} constructs an API endpoint to query HIV
-#' self testing kits from the analytics resource. The default endpoint will
-#' query insti and oraq kits distributed via hotpots.
+#' \code{api_endpoint} constructs an API endpoint to query HIV self testing kits
+#' from the analytics resource. The default endpoint will query insti and oraq
+#' kits distributed via hotpots.
 #'
-#' @param baseurl A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.
+#' @param baseurl A string, the base URL of a PSI - MIS. Default is PSI - MIS
+#'   clone server.
 #' @param dimension_dx A string or character vector, data elements or indicators
 #'   uid. The defaults are Oraq (id: mOGarPwHuFc) and Insti (id: dQTWxMDtAiW)
 #'   kits bought data elements uids.
@@ -248,6 +249,8 @@ print.api_update_data <- function(x, ...){
 
 
 #' Basic Auth
+#'
+#' Authenticate to a PSI - MIS.
 #'
 #' @importFrom httr GET authenticate status_code
 #' @param baseurl A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.
