@@ -33,7 +33,7 @@ library(hivstr)
 
 Then set and pass credentials to a PSI MIS. 
 
-```{r}
+```{r, eval=FALSE}
 # server url, default is clone
 baseurl <- "https://clone.psi-mis.org/"
 
