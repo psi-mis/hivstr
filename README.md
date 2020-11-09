@@ -60,3 +60,11 @@ bypass_ke_distr(baseurl)
 ```
 
 Expect a TRUE for a successive update, otherwise there will be errors.
+
+Alternatively, please download the scripted file
+[here](https://github.com/psi-mis/hivstr/blob/main/ke_hivst-script.R)
+and source it from your R CMD like this:
+
+``` r
+source("~ the location of the script")
+```
