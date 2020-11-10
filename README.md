@@ -44,8 +44,8 @@ Then set and pass credentials to a PSI MIS.
 baseurl <- "https://clone.psi-mis.org/"
 
 # enter username & password
-usr <- "ke_hiv"
-pwd <- "Temp@123"
+usr <- "ke_tunza"
+pwd <- "Test@2020!"
 
 # login to a PSI MIS
 api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
@@ -57,9 +57,15 @@ Run this function to bypass HIVST KE distribution channels:
 ``` r
 
 bypass_ke_distr(baseurl)
+#> 
+#> ── Bypassing KE distribution channels ──────────────────────────────────────────
+#> ✓ Pulling kits distribution data
+#> ✓ Updating pharmacy kits to the default period LAST_12_MONTHS
+#> ✓ Bypassing KE distribution channels
+#> ✓ Updating kits distribution data
+#> ✓ checking if there are any fails
+#> ✓ Done Update completed successively!
 ```
-
-Expect a TRUE for a successive update, otherwise there will be errors.
 
 Alternatively, please download the scripted file
 [here](https://github.com/psi-mis/hivstr/blob/main/ke_hivst-script.R)
