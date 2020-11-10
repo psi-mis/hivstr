@@ -1,6 +1,7 @@
 # hivstr 0.1.0
 
 * Enriched commnadline messages
+* Set default fall back period to `LAST_12_MONTHS`
 
 ## Minor changes
 
