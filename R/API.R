@@ -5,6 +5,7 @@
 #' @param version Numeric. The current supported Web API version.
 #'
 #' @return The supported API version.
+#' @export
 api_version <- function(version = NULL){
   if (is.null(version)){
     32
@@ -22,6 +23,7 @@ api_version <- function(version = NULL){
 #' @param push Logical. Default is FALSE, which returns the analytics resource.
 #'
 #' @return A string, an API resource.
+#' @export
 api_resource <- function(resource = NULL, push = FALSE){
   if (!is.null(resource) && push == FALSE){
     paste0(
@@ -63,6 +65,7 @@ api_resource <- function(resource = NULL, push = FALSE){
 #'   default is false.
 #'
 #' @return A string, An API endpoint.
+#' @export
 api_endpoint <- function(baseurl = "https://clone.psi-mis.org/", dimension_dx = c("dQTWxMDtAiW","mOGarPwHuFc"), category = "n5ODfcdD1YQ",
                           category_option = "YF8v2OSxWKl", dimension_ou = "rP1W74RpNWF", dimension_pe = "THIS_MONTH",
                           completed_only = "false"){
