@@ -9,13 +9,13 @@ if (!require("hivstr")) install_github("psi-mis/hivstr")
 # set up ------------------------------------------------------------------
 
 # server url, default is clone
-baseurl <- "https://clone.psi-mis.org/" 
+baseurl <- "https://clone.psi-mis.org/"
 
 # username
-usr <- "ke_hiv" 
+usr <- "ke_tunza"
 
 # password
-pwd <- "Temp@123" 
+pwd <- "Test@2020!"
 
 # login to a PSI MIS
 api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
