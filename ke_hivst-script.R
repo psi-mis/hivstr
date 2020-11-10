@@ -3,10 +3,15 @@
 
 if (!require("devtools")) install.packages("devtools")
 
-if (!require("hivstr")) install_github("psi-mis/hivstr")
+#if (!require("hivstr")) install_github("psi-mis/hivstr")
+
+#install the new version
+devtools::install_github("psi-mis/hivstr")
 
 
 # set up ------------------------------------------------------------------
+
+library(hivstr)
 
 # server url, default is clone
 baseurl <- "https://clone.psi-mis.org/"
@@ -21,5 +26,5 @@ pwd <- "Test@2020!"
 api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
 #> [1] TRUE
 
-# run script, expect TRUE
+# run script, expect done
 bypass_ke_distr(baseurl)
