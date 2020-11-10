@@ -60,7 +60,7 @@ api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
 
 Run this function to bypass HIVST KE distribution channels:
 
-```{r}
+```{r,}
 
 bypass_ke_distr(baseurl)
 
