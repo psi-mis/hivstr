@@ -58,4 +58,23 @@ semi_colon <- function(...){
   paste0(..., collapse = ";")
 }
 
+#' Print Note
+#'
+#' @importFrom crayon cyan %+%
+#' @noRd
+note <- function(...){
+  cyan(...)
+  #bold$cyan$inverse("NOTE ") %+% " : " %+%  bold(...)
+}
+
+
+
+#' Print main
+#'
+#' @importFrom crayon green inverse
+#' @noRd
+main <- function(...){
+  green$inverse(...)
+}
+
 
