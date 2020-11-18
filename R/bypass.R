@@ -98,17 +98,29 @@ bypass_ke_distr <- function(baseurl){
   kits_distr_kits_hotspots <- dplyr::mutate(kits_distr_kits$hotspots$response$dataValues,
                                             dataElement = ifelse(.data$dataElement == main$insti,
                                                                  hotspots$insti,
-                                                                 hotspots$oraq))
+                                                                 ifelse(.data$dataElement == main$sure_check,
+                                                                        hotspots$sure_check,
+                                                                        hotspots$oraq
+                                                                        )
+                                                                 ))
 
   kits_distr_kits_pharmacies <- dplyr::mutate(kits_distr_kits$pharmacies$response$dataValues,
                                               dataElement = ifelse(.data$dataElement == main$insti,
                                                                    pharmacies$insti,
-                                                                   pharmacies$oraq))
+                                                                   ifelse(.data$dataElement == main$sure_check,
+                                                                          pharmacies$sure_check,
+                                                                          pharmacies$oraq
+                                                                          )
+                                                                  ))
 
   kits_distr_kits_workplace <- dplyr::mutate(kits_distr_kits$workplace$response$dataValues,
                                              dataElement = ifelse(.data$dataElement == main$insti,
                                                                   workplace$insti,
-                                                                  workplace$oraq))
+                                                                  ifelse(.data$dataElement == main$sure_check,
+                                                                         workplace$sure_check,
+                                                                         workplace$oraq
+                                                                         )
+                                                                  ))
   transformed_kits <- list(
     hotspots = kits_distr_kits_hotspots,
     pharmacies = kits_distr_kits_pharmacies,
@@ -185,13 +197,17 @@ kits_endpoint <- function(baseurl, ...){
 kits_data_elements <- function(type){
   switch (type,
     hotspots = list(insti = "aKR4wgYNYpb",
-                    oraq = "BqezUphpPgV"),
+                    oraq = "BqezUphpPgV",
+                    sure_check = "kbxv6M4lEwe"),
     pharmacies = list(insti = "y95zrS5bSiz",
-                      oraq = "pKtc41yNqKu"),
+                      oraq = "pKtc41yNqKu",
+                      sure_check = "d3iYYZ5bAuC"),
     workplace = list(insti = "rhvlc7qPUKR",
-                     oraq = "fLbkGrbVImO"),
+                     oraq = "fLbkGrbVImO",
+                     sure_check = "OA9U42hVjji"),
     main = list(insti = "dQTWxMDtAiW",
-                oraq = "mOGarPwHuFc")
+                oraq = "mOGarPwHuFc",
+                sure_check = "JKSFbYxvXDn")
   )
 }
 
