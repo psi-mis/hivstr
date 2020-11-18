@@ -66,7 +66,7 @@ api_resource <- function(resource = NULL, push = FALSE){
 #'
 #' @return A string, An API endpoint.
 #' @export
-api_endpoint <- function(baseurl = "https://clone.psi-mis.org/", dimension_dx = c("dQTWxMDtAiW","mOGarPwHuFc"), category = "n5ODfcdD1YQ",
+api_endpoint <- function(baseurl = "https://clone.psi-mis.org/", dimension_dx = c("dQTWxMDtAiW","mOGarPwHuFc","JKSFbYxvXDn"), category = "n5ODfcdD1YQ",
                           category_option = "YF8v2OSxWKl", dimension_ou = "rP1W74RpNWF", dimension_pe = "THIS_MONTH",
                           completed_only = "false"){
 
