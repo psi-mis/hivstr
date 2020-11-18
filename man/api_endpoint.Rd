@@ -6,7 +6,7 @@
 \usage{
 api_endpoint(
   baseurl = "https://clone.psi-mis.org/",
-  dimension_dx = c("dQTWxMDtAiW", "mOGarPwHuFc"),
+  dimension_dx = c("dQTWxMDtAiW", "mOGarPwHuFc", "JKSFbYxvXDn"),
   category = "n5ODfcdD1YQ",
   category_option = "YF8v2OSxWKl",
   dimension_ou = "rP1W74RpNWF",
