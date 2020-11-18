@@ -1,3 +1,7 @@
+# hivstr 0.2.0
+
+* Add sure check kit
+
 # hivstr 0.1.0
 
 * Enriched commnadline messages
