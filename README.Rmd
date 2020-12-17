@@ -51,10 +51,10 @@ baseurl <- "https://clone.psi-mis.org/"
 
 # enter username & password
 usr <- "ke_tunza"
-pwd <- "Test@2020!"
+pwd <- "#"
 
 # login to a PSI MIS
-api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
+#api_basic_auth(baseurl = baseurl, username = usr, password = pwd)
 
 ```
 
@@ -62,7 +62,7 @@ Run this function to bypass HIVST KE distribution channels:
 
 ```{r,}
 
-bypass_ke_distr(baseurl)
+#bypass_ke_distr(baseurl)
 
 ```
 
