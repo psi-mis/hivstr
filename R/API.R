@@ -99,6 +99,7 @@ api_endpoint <- function(baseurl = "https://clone.psi-mis.org/", dimension_dx = 
 #' @return An error message
 #'
 #' @importFrom httr http_error status_code
+#' @export
 api_status_check <- function(resp = NULL){
 
   if (is.null(resp)){
@@ -128,6 +129,7 @@ api_status_check <- function(resp = NULL){
 #' @param resp A response
 #' @return An error message
 #' @importFrom httr http_type
+#' @export
 api_json_check <- function(resp = NULL){
 
   if (!is.null(resp)){
@@ -203,6 +205,7 @@ print.api_get <- function(x, ...){
 #' @param import_strategy A string. Default is CREATE_UPDATE.
 #'
 #' @return An S3 object, reponse
+#' @export
 api_update_data <- function(endpoint = NULL, data_values = NULL, import_strategy = "CREATE_AND_UPDATE"){
 
   if (is.null(endpoint)){
