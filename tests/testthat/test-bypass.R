@@ -1,5 +1,5 @@
 baseurl <- "https://clone.psi-mis.org/"
-hivstr::api_basic_auth(username = "ke_tunza", password = "Test@2020!")
+hivstr::api_basic_auth(username = "ke_tunza", password = "#")
 
 # Pull Kits data
 kits_distr <- purrr::map(kits_endpoint(baseurl),api_get)
