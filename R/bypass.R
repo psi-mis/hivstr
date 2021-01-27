@@ -2,21 +2,23 @@
 #'
 #' Bypass KE Distribution channels, a category combination filter.
 #' @param baseurl A string, the base URL of a PSI - MIS. Default is PSI - MIS clone server.
+#' @param period A DHIS2 period. Specifies what period of data to update. Default, `THIS_MONTH`.
+#' @param ou_id The organization unit UID to update. Default is `Kenya UID (rP1W74RpNWF)`.
 #' @importFrom rlang .data
 #' @importFrom cli cli_h1 cli_alert_success cli_alert_danger cli_alert_info
 #' @importFrom crayon %+%
 #' @export
-bypass_ke_distr <- function(baseurl){
+bypass_ke_distr <- function(baseurl, period = "THIS_MONTH", ou_id = "rP1W74RpNWF"){
 
   cli_h1("Bypass KE distribution channels")
 
   cli_alert_success("Pulling kits distribution data")
 
   # pull kit distribution data
-  kits_distr <- purrr::map(kits_endpoint(baseurl),api_get)
+  kits_distr <- purrr::map(kits_endpoint(baseurl, dimension_pe = period, dimension_ou = ou_id),api_get)
 
   # default kits
-  default_kits_distr <- purrr::map(kits_endpoint(baseurl, dimension_pe = "LAST_12_MONTHS"),api_get)
+  default_kits_distr <- purrr::map(kits_endpoint(baseurl, dimension_pe = "LAST_12_MONTHS", dimension_ou = ou_id),api_get)
 
   # parse kits
   kits_distr_kits <- purrr::map(kits_distr, function(x){
